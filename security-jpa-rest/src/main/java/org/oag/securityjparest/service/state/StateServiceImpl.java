@@ -45,6 +45,9 @@ public class StateServiceImpl implements StateServiceInteface {
     @Override
     public ApiResponse editState(StateDto stateDto, Long id) {
         Optional<StateEntity> optionalStateEntity = stateRepository.findById(id);
+        if (stateRepository.existsByNameAndIdNot(stateDto.getName(), id)) {
+            return new ApiResponse("bunday mamlakat bazada mavjud!!!", false);
+        }
         if (optionalStateEntity.isEmpty()) {
             return new ApiResponse("Bunday id li mamlakat mavjud emas!!!", false);
         }
